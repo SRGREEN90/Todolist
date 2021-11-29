@@ -1,5 +1,5 @@
 import React, {useState} from 'react';
-import { v1 } from 'uuid';
+import {v1} from 'uuid';
 import './App.css';
 import TodoList from './TodoList';
 
@@ -34,27 +34,33 @@ function App() {
     const changeFilter = (filter: FilterValuesType) => {
         setFilter(filter)
     }
-    console.log(tasks)
-    // const tasks = result[0]
-    // const setTasks = result[1]
 
-    const addTask = (title: string) => {
-        let newTask = {id: v1(), title: title, isDone: false}
-            let newTasks = [newTask, ...tasks]
-        setTasks(newTasks)
+    const addTask = (title: string) => {                      //получает title, который надо добавить
+        let newTask = {id: v1(), title: title, isDone: false} //создает таску на осове этого title
+        let newTasks = [newTask, ...tasks]   // добавляет в копию массива, куда попадают и остальные таски
+        setTasks(newTasks)                   // и новый массив устанавливает в state
     }
 
-    const removeTask = (taskID: string) => {
-        const UpdatedTasks = tasks.filter(task => task.id !== taskID)
-        setTasks(UpdatedTasks)
+    const removeTask = (taskID: string) => {                          // получает taskID, который надо добавить
+        const UpdatedTasks = tasks.filter(task => task.id !== taskID) //создает отфильтрованную по taskID таску
+        setTasks(UpdatedTasks)                                        // и отфильтрованный массив устанавливает в state
+    }
+
+
+    const changeStatus = (taskId: string, isDone: boolean) => {
+        let task = tasks.find( t => t.id === taskId)
+        if (task) {
+            task.isDone = isDone
+        }
+        setTasks([...tasks])
     }
 
     let tasksForRender = tasks
-    if(filter === 'active') {
+    if (filter === 'active') {
         tasksForRender = tasks.filter(t => t.isDone === false)
     }
 
-    if(filter === 'completed') {
+    if (filter === 'completed') {
         tasksForRender = tasks.filter(t => t.isDone === true)
     }
 
@@ -65,8 +71,11 @@ function App() {
                       title={TodoListApp}
                       changeFilter={changeFilter}
                       addTask={addTask}
+                      changeTaskStatus={changeStatus}
+                      buttonFilter={filter}
             />
         </div>
     );
 }
+
 export default App;
