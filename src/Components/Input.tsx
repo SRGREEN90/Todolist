@@ -39,10 +39,8 @@ const Input = (props:typeProps) => {
                 className={error ? "error" : ""}
             />
             {/*<button onClick={addTask}>+</button>*/}
-            <Button
-                style={{maxWidth: '30px', maxHeight: '30px', minWidth: '30px', minHeight: '30px'}}
-                onClick={addTask} variant="contained" color="success">
-                +
+            <Button color='primary' variant="contained" onClick={addTask}
+                    style={{maxWidth: '30px', maxHeight: '30px', minWidth: '30px', minHeight: '30px'}}>+
             </Button>
             {error && <div className="error-message">{error}</div>}
         </div>
