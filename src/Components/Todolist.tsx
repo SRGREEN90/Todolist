@@ -1,9 +1,11 @@
 import React, {ChangeEvent, useState, KeyboardEvent} from 'react';
-import {FilterValuesType} from '../App';
+import {FilterValuesType, TasksStateType} from '../App';
 import Input from "./Input";
 import EditableSpan from "./EditableSpan";
 import {Button, Checkbox, IconButton} from "@material-ui/core";
 import {Delete} from "@material-ui/icons";
+import {useSelector} from "react-redux";
+import {rootReducerType} from "../Store/Store";
 
 export type TaskType = {
     id: string
@@ -26,7 +28,6 @@ type PropsType = {
 }
 
 export function Todolist(props: PropsType) {
-
     const removeTodolist = () => props.removeTodolist(props.id)
 
     const onAllClickHandler = () => props.changeFilter("all", props.id);
@@ -47,7 +48,6 @@ export function Todolist(props: PropsType) {
 
     return <div>
         <h3>
-            {/*{props.title}*/}
             <EditableSpan title={props.title} callBackForEditableSpan={callBackForEditableSpanShapkaHandler}/>
 
             <IconButton onClick={removeTodolist}>
@@ -60,6 +60,7 @@ export function Todolist(props: PropsType) {
         <ul>
             {
                 props.tasks.map(t => {
+
                     const onClickHandler = () => props.removeTask(t.id, props.id)
                     const onChangeHandler = (e: ChangeEvent<HTMLInputElement>) => {
                         let newIsDoneValue = e.currentTarget.checked;
@@ -73,9 +74,7 @@ export function Todolist(props: PropsType) {
 
                         <Checkbox onChange={onChangeHandler} color='success' checked={t.isDone} />
 
-
                         <EditableSpan title={t.title} callBackForEditableSpan={callBackForEditableSpanHandler}/>
-
 
                         <IconButton onClick={onClickHandler}>
                             <Delete/>
