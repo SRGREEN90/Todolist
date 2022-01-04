@@ -11,9 +11,14 @@ import TasksReducer, {
     addTaskAC,
     changeStatusAC,
     removeTaskAC,
-    removeTaskWithTodoAC,
+    removeTaskWithTodoAC, updateTaskAC,
 } from "./Reducers/TaskReducer";
-import TodolistReducer, {addTodolistAC, changeFilterAC, removeTodolistAC} from "./Reducers/TodolistReducer";
+import TodolistReducer, {
+    addTodolistAC,
+    changeFilterAC,
+    removeTodolistAC,
+    updateTodolistAC
+} from "./Reducers/TodolistReducer";
 import {useDispatch, useSelector} from "react-redux";
 import {rootReducerType} from "./Store/Store";
 
@@ -40,9 +45,8 @@ function App() {
     //     {id: todolistId2, title: "What to buy", filter: "all"}
     // ])
 
-    let dispatch = useDispatch()
-    let tasks = useSelector<rootReducerType, TasksStateType>(state => state.tasks)
-
+    const dispatch = useDispatch()
+    const tasks = useSelector<rootReducerType, TasksStateType>(state => state.tasks)
     const todolists = useSelector<rootReducerType, TodolistType[]>(state => state.todolists)
 
     // let [tasks, tasksDispatch] = useReducer(TasksReducer,{
@@ -76,11 +80,13 @@ function App() {
     const updateTodolist = (todolistId: string, LocalTitle: string) => {
         // setTodolists(todolists.map(m => m.id === todolistId ? {...m, title: LocalTitle} : m))
         // todolistsDispatch(todolists.map(m => m.id === todolistId ? {...m, title: LocalTitle} : m))
+        dispatch(updateTodolistAC(todolistId, LocalTitle))
     }
 
     const updateTask = (todolistId: string, id: string, LocalTitle: string) => {
         // setTasks({...tasks, [todolistId]: tasks[todolistId].map(m => m.id === id ? {...m, title: LocalTitle} : m)})
-        console.log(LocalTitle)
+        //console.log(LocalTitle)
+        dispatch(updateTaskAC(todolistId, id, LocalTitle))
     }
 
     function removeTask(id: string, todolistId: string) {

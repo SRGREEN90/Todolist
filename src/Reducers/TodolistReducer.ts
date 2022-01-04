@@ -10,26 +10,32 @@ let initialState: Array<TodolistType> = [
     {id: todolistId2, title: "What to buy", filter: "all"}
 ]
 
-export const TodolistReducer = (state=initialState, action: mainTypeAC): Array<TodolistType> => {
+export const TodolistReducer = (state = initialState, action: mainTypeAC): Array<TodolistType> => {
     switch (action.type) {
         case 'REMOVE-TODOLIST': {
             return state.filter(tl => tl.id !== action.payload.todolistId)
         }
         case 'ADD-TODOLIST': {
-           return  [...state, {id: action.payload.todolistId, title: action.payload.title, filter: "all"}]
+            return [...state, {id: action.payload.todolistId, title: action.payload.title, filter: "all"}]
 
         }
         case 'CHANGE-FILTER': {
-           return state.map(tl => tl.id === action.payload.todolistId ? {...tl, filter : action.payload.value} : tl)
-            }
+            return state.map(tl => tl.id === action.payload.todolistId ? {...tl, filter: action.payload.value} : tl)
+        }
+
+        case 'UPDATE-TODOLIST': {
+            return state.map(m => m.id === action.payload.todolistId ? {...m, title: action.payload.LocalTitle} : m)
+        }
+
         default:
             return state
     }
 }
-type mainTypeAC = removeTodolistACType | addTodolistACType | changeFilterACType
+type mainTypeAC = removeTodolistACType | addTodolistACType | changeFilterACType | updateTodolistACType
 type removeTodolistACType = ReturnType<typeof removeTodolistAC>
 type addTodolistACType = ReturnType<typeof addTodolistAC>
 type changeFilterACType = ReturnType<typeof changeFilterAC>
+type updateTodolistACType = ReturnType<typeof updateTodolistAC>
 
 export const removeTodolistAC = (id: string) => {
     return {
@@ -58,4 +64,14 @@ export const changeFilterAC = (value: FilterValuesType, id: string) => {
         }
     } as const
 }
+export const updateTodolistAC = (todolistId: string, LocalTitle: string) => {
+    return {
+        type: 'UPDATE-TODOLIST',
+        payload: {
+            todolistId,
+            LocalTitle
+        }
+    } as const
+}
+
 export default TodolistReducer
