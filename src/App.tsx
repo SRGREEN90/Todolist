@@ -86,7 +86,7 @@ function App() {
     const updateTask = (todolistId: string, id: string, LocalTitle: string) => {
         // setTasks({...tasks, [todolistId]: tasks[todolistId].map(m => m.id === id ? {...m, title: LocalTitle} : m)})
         //console.log(LocalTitle)
-        dispatch(updateTaskAC(todolistId, id, LocalTitle))
+        dispatch(updateTaskAC( id,LocalTitle, todolistId ))
     }
 
     function removeTask(id: string, todolistId: string) {
@@ -151,7 +151,6 @@ function App() {
     }
 
     function removeTodolist(id: string) {
-
         // // засунем в стейт список тудулистов, id которых не равны тому, который нужно выкинуть
         // setTodolists(todolists.filter(tl => tl.id != id));
         // // удалим таски для этого тудулиста из второго стейта, где мы храним отдельно таски

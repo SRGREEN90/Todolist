@@ -38,7 +38,7 @@ export function Todolist(props: PropsType) {
         props.addTask(title, props.id)
     }
 
-    // const callBackForEditableSpanHandler=(title: string)=>{
+    // const callBackForEditableTasks = (title: string) => {
     //     props.updateTask(props.id,t.id,LocalTitle:string)
     // }
 

@@ -33,7 +33,7 @@ export const TodolistReducer = (state = initialState, action: mainTypeAC): Array
 }
 type mainTypeAC = removeTodolistACType | addTodolistACType | changeFilterACType | updateTodolistACType
 type removeTodolistACType = ReturnType<typeof removeTodolistAC>
-type addTodolistACType = ReturnType<typeof addTodolistAC>
+export type addTodolistACType = ReturnType<typeof addTodolistAC>
 type changeFilterACType = ReturnType<typeof changeFilterAC>
 type updateTodolistACType = ReturnType<typeof updateTodolistAC>
 

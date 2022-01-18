@@ -2,7 +2,7 @@ import React from 'react'
 import {v1} from "uuid";
 import {TaskType} from "../components/Todolist";
 import {TasksStateType} from "../App";
-import {todolistId1, todolistId2} from "./TodolistReducer";
+import {addTodolistACType, todolistId1, todolistId2} from "./TodolistReducer";
 
 let initialState: TasksStateType = {
     [todolistId1]: [
@@ -75,7 +75,7 @@ type mainType =
     | changeStatusACType
     | addNewTaskACType
     | removeTaskWithTodoACType
-    | updateTaskACType
+    | updateTaskACType | addTodolistACType
 type removeTaskACType = ReturnType<typeof removeTaskAC>
 type addTaskACType = ReturnType<typeof addTaskAC>
 type changeStatusACType = ReturnType<typeof changeStatusAC>
@@ -132,7 +132,7 @@ export const addNewTaskAC = (todolistId: string,) => {
     } as const
 }
 
-export const updateTaskAC = (todolistId: string, id: string, localTitle: string) => {
+export const updateTaskAC = (id: string,localTitle: string, todolistId: string,  ) => {
     return {
         type: 'UPDATE-TASK',
         payload: {
