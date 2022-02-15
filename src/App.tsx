@@ -1,27 +1,29 @@
-import React, { useCallback } from 'react'
+import React, {useCallback, useEffect} from 'react'
 import './App.css';
-import { TaskType, Todolist } from './Todolist';
+import { Todolist } from './Todolist';
 import { AddItemForm } from './AddItemForm';
 
 import {
     addTodolistAC,
     changeTodolistFilterAC,
-    changeTodolistTitleAC,
-    removeTodolistAC
-} from './state/todolists-reducer';
-import { addTaskAC, changeTaskStatusAC, changeTaskTitleAC, removeTaskAC } from './state/tasks-reducer';
+    changeTodolistTitleAC, fetchTodolistsThunk,
+    FilterValuesType,
+    removeTodolistAC,
+    TodolistDomainType
+} from './state/todolists-reducer'
+import {
+    addTaskTC,
+    changeTaskStatusAC,
+    changeTaskTitleAC,
+    removeTaskTC
+} from './state/tasks-reducer';
 import { useDispatch, useSelector } from 'react-redux';
 import { AppRootStateType } from './state/store';
-import {AppBar, Button, Container, Grid, IconButton, Paper, Toolbar, Typography} from "@material-ui/core";
-import { Menu } from '@material-ui/icons';
+import {TaskStatuses, TaskType} from './api/todolists-api'
+import IconButton from '@material-ui/core/IconButton/IconButton';
+import {AppBar, Button, Container, Grid, Paper, Toolbar, Typography,} from "@material-ui/core";
+import {Menu} from "@material-ui/icons";
 
-
-export type FilterValuesType = 'all' | 'active' | 'completed';
-export type TodolistType = {
-    id: string
-    title: string
-    filter: FilterValuesType
-}
 
 export type TasksStateType = {
     [key: string]: Array<TaskType>
@@ -30,22 +32,22 @@ export type TasksStateType = {
 
 function App() {
 
-    const todolists = useSelector<AppRootStateType, Array<TodolistType>>(state => state.todolists)
+    const todolists = useSelector<AppRootStateType, Array<TodolistDomainType>>(state => state.todolists)
     const tasks = useSelector<AppRootStateType, TasksStateType>(state => state.tasks)
     const dispatch = useDispatch();
 
     const removeTask = useCallback(function (id: string, todolistId: string) {
-        const action = removeTaskAC(id, todolistId);
+        const action = removeTaskTC(id, todolistId);
         dispatch(action);
     }, []);
 
     const addTask = useCallback(function (title: string, todolistId: string) {
-        const action = addTaskAC(title, todolistId);
-        dispatch(action);
+     //   const action = addTaskAC(title, todolistId);
+        dispatch(addTaskTC(title, todolistId));
     }, []);
 
-    const changeStatus = useCallback(function (id: string, isDone: boolean, todolistId: string) {
-        const action = changeTaskStatusAC(id, isDone, todolistId);
+    const changeStatus = useCallback(function (id: string, status: TaskStatuses, todolistId: string) {
+        const action = changeTaskStatusAC(id, status, todolistId);
         dispatch(action);
     }, []);
 
@@ -73,6 +75,11 @@ function App() {
         const action = addTodolistAC(title);
         dispatch(action);
     }, [dispatch]);
+
+    useEffect(() => {
+        dispatch(fetchTodolistsThunk)
+    }, [])
+
 
     return (
         <div className="App">
