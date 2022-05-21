@@ -17,9 +17,11 @@
     "@types/react-dom": "^17.0.11",
     "@types/uuid": "^8.3.3",
     "axios": "^0.25.0",
+    "formik": "^2.2.9",
     "react": "^17.0.2",
     "react-dom": "^17.0.2",
     "react-redux": "^7.2.6",
+    "react-router-dom": "^6.2.1",
     "react-scripts": "4.0.3",
     "redux": "^4.1.2",
     "redux-thunk": "^2.4.1",
@@ -75,8 +77,8 @@
     "@storybook/preset-create-react-app": "^3.2.0",
     "@storybook/react": "^6.4.14",
     "jest-image-snapshot": "^4.5.1",
-    "jest-puppeteer": "^6.0.3",
-    "puppeteer": "^13.1.2",
+    "jest-puppeteer": "^6.1.0",
+    "puppeteer": "^13.6.0",
     "start-server-and-test": "^1.14.0"
   }
 }
