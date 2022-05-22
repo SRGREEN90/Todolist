@@ -1,19 +1,27 @@
 import React from 'react';
+
 import { useDispatch, useSelector } from 'react-redux';
 import { AppRootStateType } from '../../app/store';
 import { setAppErrorAC } from '../../app/app-reducer';
-import {Snackbar, AlertProps} from "@material-ui/core";
-
+import {AlertProps, Snackbar} from "@material-ui/core";
 
 const Alert = React.forwardRef<HTMLDivElement, AlertProps>(function Alert(
     props, ref) {
-    return <div>Error</div>
+    return <div>
+        ERROR!
+    </div>
 
+
+    //<MuiAlert elevation={6} ref={ref} variant="filled" {...props} />;
 });
 
-export const ErrorSnackbar: React.FC<> = () => {
+
+export function ErrorSnackbar() {
+
     const error = useSelector<AppRootStateType, string | null>(state => state.app.error)
+
     const dispatch = useDispatch();
+
     const handleClose = (event?: React.SyntheticEvent, reason?: string) => {
         if (reason === 'clickaway') {
             return;
@@ -27,5 +35,5 @@ export const ErrorSnackbar: React.FC<> = () => {
                 {error}
             </Alert>
         </Snackbar>
-    )
+    );
 }
