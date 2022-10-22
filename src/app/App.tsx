@@ -47,7 +47,6 @@ const App = ({demo = false}: PropsType) => {
                     <Typography variant="h6">
                         News
                     </Typography>
-                    {/*<Button color="inherit">Login</Button>*/}
                     {isLoggedIn && <Button color="inherit" onClick={logoutHandler}>Log out</Button>}
                 </Toolbar>
                 {status === 'loading' && <LinearProgress/>}
@@ -59,7 +58,6 @@ const App = ({demo = false}: PropsType) => {
                     <Route path="login" element={<Login/>}/>
                     <Route path="/404" element={<h1 style={{textAlign: "center"}}>404: PAGE NOT FOUND</h1>}/>
                     <Route path="*" element={<Navigate to="/404"/>}/>
-
                 </Routes>
             </Container>
         </div>

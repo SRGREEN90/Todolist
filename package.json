@@ -2,6 +2,7 @@
   "name": "my-app",
   "version": "0.1.0",
   "private": true,
+  "homepage": "http://srgreen90.github.io/Todolist",
   "dependencies": {
     "@emotion/react": "^11.7.1",
     "@emotion/styled": "^11.6.0",
@@ -10,6 +11,7 @@
     "@material-ui/styled-engine-sc": "^5.0.0-beta.5",
     "@mui/material": "^5.8.1",
     "@mui/styled-engine-sc": "^5.8.0",
+    "@reduxjs/toolkit": "^1.8.2",
     "@testing-library/jest-dom": "^5.15.0",
     "@testing-library/react": "^11.2.7",
     "@testing-library/user-event": "^12.8.3",
@@ -20,6 +22,7 @@
     "@types/uuid": "^8.3.3",
     "axios": "^0.25.0",
     "formik": "^2.2.9",
+    "gh-pages": "^4.0.0",
     "react": "^17.0.2",
     "react-dom": "^17.0.2",
     "react-redux": "^7.2.6",
@@ -36,6 +39,8 @@
   "scripts": {
     "start": "react-scripts start",
     "build": "react-scripts build",
+    "predeploy": "npm run build",
+    "deploy": "gh-pages -d build",
     "test": "react-scripts test",
     "eject": "react-scripts eject",
     "storybook": "start-storybook -p 9009 -s public",
