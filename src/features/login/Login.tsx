@@ -11,9 +11,10 @@ import {
 } from "@material-ui/core";
 import {useFormik} from "formik";
 import {useDispatch, useSelector} from "react-redux";
-import {loginTC} from "./auth-reducer";
 import {AppRootStateType} from "../../app/store";
 import {Navigate} from "react-router-dom";
+import {loginTC} from "./auth-reducer";
+
 
 type FormikErrorType = {
     email?: string
@@ -50,8 +51,6 @@ export const Login = () => {
         },
         onSubmit: values => {
             dispatch(loginTC(values))
-            // alert(JSON.stringify(values));
-            // formik.resetForm()
         },
     })
 
@@ -78,14 +77,9 @@ export const Login = () => {
                     <FormGroup>
 
                         <TextField
-
                             label="Email"
                             margin="normal"
                             {...formik.getFieldProps('email')}
-                            // name= "email"
-                            // onChange={formik.handleChange}
-                            // value={formik.values.email}
-                            // onBlur={formik.handleBlur}
                         />
                         {formik.touched.email &&
                             formik.errors.email &&
@@ -96,10 +90,6 @@ export const Login = () => {
                             label="Password"
                             margin="normal"
                             {...formik.getFieldProps('password')}
-                            // name= "password"
-                            // onChange={formik.handleChange}
-                            // value={formik.values.password}
-                            // onBlur={formik.handleBlur}
                         />
                         {formik.touched.password &&
                             formik.errors.password &&
@@ -109,10 +99,6 @@ export const Login = () => {
                             control={
                                 <Checkbox
                                     {...formik.getFieldProps('rememberMe')}
-                                    // name= "rememberMe"
-                                    // onChange={formik.handleChange}
-                                    // checked={formik.values.rememberMe}
-                                    // onBlur={formik.handleBlur}
                                 />
                             }/>
                         <Button type={'submit'} variant={'contained'} color={'primary'}>

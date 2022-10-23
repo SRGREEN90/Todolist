@@ -2,7 +2,7 @@
   "name": "my-app",
   "version": "0.1.0",
   "private": true,
-  "homepage": "http://srgreen90.github.io/Todolist",
+  "homepage": "http://srgreen90.github.io/Todolist/",
   "dependencies": {
     "@emotion/react": "^11.7.1",
     "@emotion/styled": "^11.6.0",
@@ -37,10 +37,11 @@
     "yarn": "^1.22.17"
   },
   "scripts": {
-    "start": "react-scripts start",
-    "build": "react-scripts build",
+
     "predeploy": "npm run build",
     "deploy": "gh-pages -d build",
+    "start": "react-scripts start",
+    "build": "react-scripts build",
     "test": "react-scripts test",
     "eject": "react-scripts eject",
     "storybook": "start-storybook -p 9009 -s public",
