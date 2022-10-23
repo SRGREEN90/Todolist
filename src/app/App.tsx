@@ -8,9 +8,10 @@ import {ErrorSnackbar} from '../components/ErrorSnackbar/ErrorSnackbar'
 import {AppBar, Button, CircularProgress, Container, IconButton, LinearProgress, Toolbar, Typography} from "@material-ui/core";
 import {Menu} from "@material-ui/icons";
 import {Navigate, Route, Routes} from "react-router-dom";
+import { Login } from '../features/Login/Login'
+import { logoutTC } from '../features/Login/auth-reducer'
 
-import {Login} from "../features/login/Login";
-import { logoutTC } from '../features/login/auth-reducer'
+
 
 
 type PropsType = {
