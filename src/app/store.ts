@@ -3,12 +3,8 @@ import {todolistsReducer} from '../features/TodolistsList/todolists-reducer';
 import { combineReducers} from 'redux'
 import thunkMiddleware from 'redux-thunk'
 import {appReducer} from './app-reducer'
-import { authReducer } from '../features/login/auth-reducer';
 import {configureStore} from "@reduxjs/toolkit";
-
-
-
-
+import { authReducer } from '../features/Login/auth-reducer';
 
 // объединяя reducer-ы с помощью combineReducers,
 // мы задаём структуру нашего единственного объекта-состояния

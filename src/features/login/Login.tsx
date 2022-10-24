@@ -13,7 +13,8 @@ import {useFormik} from "formik";
 import {useDispatch, useSelector} from "react-redux";
 import {AppRootStateType} from "../../app/store";
 import {Navigate} from "react-router-dom";
-import {loginTC} from "./auth-reducer";
+import { loginTC } from './auth-reducer';
+
 
 
 type FormikErrorType = {
