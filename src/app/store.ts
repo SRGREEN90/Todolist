@@ -14,7 +14,7 @@ import {configureStore} from "@reduxjs/toolkit";
 // мы задаём структуру нашего единственного объекта-состояния
 const rootReducer = combineReducers({
     tasks: tasksReducer,
-    todolists: todolistsReducer,
+    todoLists: todolistsReducer,
     app: appReducer,
     auth: authReducer
 })
