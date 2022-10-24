@@ -1,8 +1,9 @@
 import { Dispatch } from 'redux'
-import { SetAppErrorActionType, setAppStatusAC, SetAppStatusActionType } from '../../app/app-reducer'
+
 import {authAPI, LoginParamsType} from "../../api/todolists-api";
 import {handleServerAppError, handleServerNetworkError} from "../../Utils/Error-utils";
 import {createSlice, PayloadAction} from "@reduxjs/toolkit";
+import {SetAppErrorActionType, setAppStatus, SetAppStatusActionType} from '../../app/app-reducer';
 
 
 const initialState: InitialStateType = {
@@ -39,12 +40,12 @@ export const {setIsLoggedIn} = slice.actions
 
 // thunks
 export const loginTC = (data: LoginParamsType) => (dispatch: Dispatch<ActionsType>) => {
-    dispatch(setAppStatusAC({status: 'loading'}))
+    dispatch(setAppStatus({status: 'loading'}))
     authAPI.login(data)
         .then(res => {
             if (res.data.resultCode === 0) {
                 dispatch(setIsLoggedIn({value: true}))
-                dispatch(setAppStatusAC({status:'succeeded'}))
+                dispatch(setAppStatus({status:'succeeded'}))
             } else {
                 handleServerAppError(res.data, dispatch);
             }
@@ -55,12 +56,12 @@ export const loginTC = (data: LoginParamsType) => (dispatch: Dispatch<ActionsTyp
 }
 
 export const logoutTC = () => (dispatch: Dispatch<ActionsType>) => {
-    dispatch(setAppStatusAC({status: 'loading'}))
+    dispatch(setAppStatus({status: 'loading'}))
     authAPI.logout()
         .then(res => {
             if (res.data.resultCode === 0) {
-                dispatch(setIsLoggedInAC(false))
-                dispatch(setAppStatusAC({status:'succeeded'}))
+                dispatch(setIsLoggedIn({value: false}))
+                dispatch(setAppStatus({status:'succeeded'}))
             } else {
                 handleServerAppError(res.data, dispatch);
             }
@@ -72,4 +73,5 @@ export const logoutTC = () => (dispatch: Dispatch<ActionsType>) => {
 
 
 // types
+//type ActionsType = ReturnType<typeof setIsLoggedInAC> | SetAppStatusActionType | SetAppErrorActionType
 type ActionsType = ReturnType<typeof setIsLoggedIn> | SetAppStatusActionType | SetAppErrorActionType
