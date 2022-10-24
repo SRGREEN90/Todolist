@@ -2,7 +2,8 @@ import {Dispatch} from "redux"
 import {authAPI} from "../api/todolists-api"
 import {createSlice, PayloadAction} from "@reduxjs/toolkit";
 import {handleServerAppError, handleServerNetworkError} from "../Utils/Error-utils";
-import { setIsLoggedIn } from "../features/Login/auth-reducer";
+import {setIsLoggedIn} from "../features/login/auth-reducer";
+
 
 const initialState: InitialStateType = {
     status: 'idle',
