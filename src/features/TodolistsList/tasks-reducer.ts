@@ -15,19 +15,17 @@ import {addTodoList, removeTodoList, setTodoLists} from './todolists-reducer';
 
 const initialState: TasksStateType = {}
 
-export const fetchTasksTC = createAsyncThunk('tasksReducer/fetchTasks', (todoListId: string, thunkApi) => {
+export const fetchTasksTC = createAsyncThunk('tasksReducer/fetchTasks', async (todoListId: string, thunkApi) => {
     thunkApi.dispatch(setAppStatus({status:'loading'}))
-    return todolistsAPI.getTasks(todoListId)
-        .then((res) => {
+    const res = await todolistsAPI.getTasks(todoListId) //he will return another promise, when the last one is mentioned
             const tasks = res.data.items
             thunkApi.dispatch(setAppStatus({status:'succeeded'}))
             return {tasks, todoListId}
-        })
 })
 
-export const removeTaskTC = createAsyncThunk('tasksReducer/removeTask', (param: {taskId: string, todoListId: string}, thunkApi) => {
-   return todolistsAPI.deleteTask(param.todoListId, param.taskId)
-        .then(res =>({taskId: param.taskId, todoListId: param.todoListId}))
+export const removeTaskTC = createAsyncThunk('tasksReducer/removeTask', async (param: {taskId: string, todoListId: string}, thunkApi) => {
+   await todolistsAPI.deleteTask(param.todoListId, param.taskId)
+        return {taskId: param.taskId, todoListId: param.todoListId}
 })
 
 export const addTaskTC = (title: string, todolistId: string) => (dispatch: Dispatch) => {
