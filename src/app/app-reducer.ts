@@ -73,7 +73,6 @@ export const initializeAppTC = () => (dispatch: Dispatch) => {
         if (res.data.resultCode === 0) {
             dispatch(setAppStatus({status:'succeeded'}))
             dispatch(setIsLoggedIn({value: true}));
-
         } else {
             handleServerAppError(res.data, dispatch);
         }
