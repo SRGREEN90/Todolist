@@ -4,6 +4,8 @@ import {handleServerAppError, handleServerNetworkError} from "../../Utils/Error-
 import {createAsyncThunk, createSlice, PayloadAction} from "@reduxjs/toolkit";
 import {SetAppErrorActionType, setAppStatus, SetAppStatusActionType} from '../../app/app-reducer';
 import { AxiosError } from 'axios';
+import {Simulate} from "react-dom/test-utils";
+
 
 
 export const loginTC = createAsyncThunk<{isLoggedIn: boolean}, LoginParamsType,{
@@ -22,7 +24,7 @@ export const loginTC = createAsyncThunk<{isLoggedIn: boolean}, LoginParamsType,{
              }
          } catch(err)  {
              //  const error: AxiosError = err
-             // handleServerNetworkError(error, thunkApi.dispatch)
+            //  handleServerNetworkError(error, thunkApi.dispatch)
              return thunkApi.rejectWithValue({errors: ['error'], fieldsErrors: undefined})
         }
 })
