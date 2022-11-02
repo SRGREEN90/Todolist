@@ -1,5 +1,4 @@
 import {fetchTasksTC, removeTaskTC, tasksReducer, TasksStateType} from "./tasks-reducer";
-import {action} from "@storybook/addon-actions";
 import {TaskPriorities, TaskStatuses} from "../../api/todolists-api";
 let startState: TasksStateType = {}
 

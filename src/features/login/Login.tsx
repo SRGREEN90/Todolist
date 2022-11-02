@@ -10,8 +10,8 @@ import {
     TextField
 } from "@material-ui/core";
 import {useFormik} from "formik";
-import {useDispatch, useSelector} from "react-redux";
-import {AppRootStateType} from "../../app/store";
+import {useSelector} from "react-redux";
+import {AppRootStateType, useAppDispatch} from "../../app/store";
 import {Navigate} from "react-router-dom";
 import { loginTC } from './auth-reducer';
 
@@ -26,7 +26,7 @@ type FormikErrorType = {
 
 export const Login = () => {
     const isLoggedIn = useSelector<AppRootStateType, boolean>(state => state.auth.isLoggedIn)
-    const dispatch = useDispatch()
+    const dispatch = useAppDispatch()
 
     const formik = useFormik({
         initialValues: {
@@ -50,8 +50,15 @@ export const Login = () => {
 
             return errors;
         },
-        onSubmit: values => {
-            dispatch(loginTC(values))
+
+        onSubmit: async (values, formikHelpers) => {
+           const action = await dispatch(loginTC(values))
+            if(loginTC.rejected.match(action)){
+                if(action.payload?.fieldsErrors?.length){
+                    const error = action.payload?.fieldsErrors[0]
+                    formikHelpers.setFieldError(error.field, error.error)
+                }
+            }
         },
     })
 

@@ -5,6 +5,7 @@ import thunkMiddleware from 'redux-thunk'
 import {appReducer} from './app-reducer'
 import {configureStore} from "@reduxjs/toolkit";
 import {authReducer} from "../features/login/auth-reducer";
+import {useDispatch} from "react-redux";
 
 const rootReducer = combineReducers({
     tasks: tasksReducer,
@@ -27,3 +28,6 @@ window.store = store;
 // определить автоматически тип всего объекта состояния
 
 // создаем store toolkit
+
+type AppDispatchType = typeof store.dispatch //создаем обертку над диспатчем
+export const useAppDispatch = () => useDispatch<AppDispatchType>()
