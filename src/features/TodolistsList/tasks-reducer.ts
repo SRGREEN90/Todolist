@@ -30,8 +30,9 @@ export const removeTaskTC = createAsyncThunk('tasksReducer/removeTask', async (p
 
 export const addTaskTC = createAsyncThunk('tasksReducer/addTask', async (param:{title: string, todolistId: string}, thunkApi) => {
     thunkApi.dispatch(setAppStatus({status:'loading'}))
-    const res = await todolistsAPI.createTask(param.todolistId, param.title)
+
         try{
+            const res = await todolistsAPI.createTask(param.todolistId, param.title)
             if (res.data.resultCode === 0) {
                 const task = res.data.data.item
                 const action = addTask({task})

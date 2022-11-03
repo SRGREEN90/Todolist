@@ -1,26 +1,63 @@
 import {Dispatch} from "redux"
 import {authAPI} from "../api/todolists-api"
-import {createSlice, PayloadAction} from "@reduxjs/toolkit";
+import {createAsyncThunk, createSlice, PayloadAction} from "@reduxjs/toolkit";
 import {handleServerAppError, handleServerNetworkError} from "../Utils/Error-utils";
 import {setIsLoggedIn} from "../features/login/auth-reducer";
 
-
-const initialState: InitialStateType = {
-    status: 'idle',
-    error: null,
-    isInitialized: false
-}
 export type RequestStatusType = 'idle' | 'loading' | 'succeeded' | 'failed'
-
 export type InitialStateType = {
     status: RequestStatusType
     error: string | null
     isInitialized: boolean
 }
 
+
+export const initializeAppTC = createAsyncThunk('app/initialized') => {
+    dispatch(setAppStatus({status: 'loading'}))
+    authAPI.me().then(res => {
+        if (res.data.resultCode === 0) {
+            dispatch(setAppStatus({status:'succeeded'}))
+            dispatch(setIsLoggedIn({value: true}));
+        } else {
+            handleServerAppError(res.data, dispatch);
+        }
+    })
+        .catch((error) => {
+            handleServerNetworkError(error, dispatch)
+
+        })
+        .finally(()=>{
+            dispatch(setInitialized({isInitialized: true}))
+
+        })
+}
+
+// export const initializeAppTC_ = () => (dispatch: Dispatch) => {
+//     dispatch(setAppStatus({status: 'loading'}))
+//     authAPI.me().then(res => {
+//         if (res.data.resultCode === 0) {
+//             dispatch(setAppStatus({status:'succeeded'}))
+//             dispatch(setIsLoggedIn({value: true}));
+//         } else {
+//             handleServerAppError(res.data, dispatch);
+//         }
+//     })
+//         .catch((error) => {
+//             handleServerNetworkError(error, dispatch)
+//
+//         })
+//         .finally(()=>{
+//             dispatch(setInitialized({isInitialized: true}))
+//
+//         })
+// }
 const slice = createSlice({
     name: 'app',
-    initialState: initialState,
+    initialState: {
+        status: 'idle',
+        error: null,
+        isInitialized: false
+    } as InitialStateType,
     reducers: {
         setAppStatus(state, action: PayloadAction<{ status: RequestStatusType }>){
             state.status = action.payload.status
@@ -35,6 +72,12 @@ const slice = createSlice({
 })
 export const appReducer = slice.reducer
 export const {setAppStatus, setAppError, setInitialized} = slice.actions
+
+
+
+export type SetAppErrorActionType = ReturnType<typeof setAppError>
+export type SetAppStatusActionType = ReturnType<typeof setAppStatus>
+export type SetAppInitializedActionType = ReturnType<typeof setInitialized>
 
 
 // export const appReducer = (state: InitialStateType = initialState, action: ActionsType): InitialStateType => {
@@ -56,33 +99,9 @@ export const {setAppStatus, setAppError, setInitialized} = slice.actions
 // export const setAppStatusAC = (status: RequestStatusType) => ({type: 'APP/SET-STATUS', status} as const)
 // export const setInitializedAC = (isInitialized: boolean) => ({type: 'APP/SET-INITIALIZED', isInitialized} as const)
 //
-export type SetAppErrorActionType = ReturnType<typeof setAppError>
-export type SetAppStatusActionType = ReturnType<typeof setAppStatus>
-export type SetAppInitializedActionType = ReturnType<typeof setInitialized>
+
 //
 // type ActionsType =
 //     | SetAppErrorActionType
 //     | SetAppStatusActionType
 //     |SetAppInitializedActionType
-
-
-//======================thunks=============================
-export const initializeAppTC = () => (dispatch: Dispatch) => {
-    dispatch(setAppStatus({status: 'loading'}))
-    authAPI.me().then(res => {
-        if (res.data.resultCode === 0) {
-            dispatch(setAppStatus({status:'succeeded'}))
-            dispatch(setIsLoggedIn({value: true}));
-        } else {
-            handleServerAppError(res.data, dispatch);
-        }
-    })
-        .catch((error) => {
-            handleServerNetworkError(error, dispatch)
-
-        })
-        .finally(()=>{
-            dispatch(setInitialized({isInitialized: true}))
-
-        })
-}
