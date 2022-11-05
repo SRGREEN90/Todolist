@@ -5,7 +5,7 @@ import {
     addTodolistTC,
     changeTodolistFilterTC,
     changeTodolistTitleTC,
-    fetchTodolistsTC,
+    fetchTodoListsTC,
     FilterValuesType,
     removeTodolistTC,
     TodolistDomainType
@@ -28,7 +28,7 @@ export const TodoListsList: React.FC<PropsType> = ({demo = false}) => {
 
     useEffect(() => {
         if (isLoggedIn) {
-            const thunk = fetchTodolistsTC()
+            const thunk = fetchTodoListsTC()
             dispatch(thunk)
         }
 
@@ -61,8 +61,8 @@ export const TodoListsList: React.FC<PropsType> = ({demo = false}) => {
         dispatch(removeTodolistTC(id))
     }, [dispatch])
 
-    const changeTodolistTitle = useCallback(function (id: string, title: string) {
-        dispatch(changeTodolistTitleTC(id, title))
+    const changeTodolistTitle = useCallback(function (todoId: string, todoTitle: string) {
+        dispatch(changeTodolistTitleTC({todoId, todoTitle}))
     }, [dispatch])
 
     const addTodolist = useCallback((title: string) => {
