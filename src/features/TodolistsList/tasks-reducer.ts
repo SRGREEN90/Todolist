@@ -9,7 +9,7 @@ import {AppRootStateType} from '../../app/store'
 import {setAppStatus} from '../../app/app-reducer'
 import {createAsyncThunk, createSlice} from "@reduxjs/toolkit";
 import {handleServerAppError} from "../../Utils/Error-utils";
-import {addTodoList, removeTodoList, setTodoLists} from './todolists-reducer';
+import {addTodolistTC, fetchTodoListsTC, removeTodolistTC} from './todolists-reducer';
 
 const initialState: TasksStateType = {}
 
@@ -28,7 +28,6 @@ export const removeTaskTC = createAsyncThunk('tasksReducer/removeTask', async (p
 
 export const addTaskTC = createAsyncThunk('tasksReducer/addTask', async (param: { title: string, todolistId: string }, {dispatch, rejectWithValue}) => {
     dispatch(setAppStatus({status: 'loading'}))
-
     try {
         const res = await todolistsAPI.createTask(param.todolistId, param.title)
         if (res.data.resultCode === 0) {
@@ -39,7 +38,7 @@ export const addTaskTC = createAsyncThunk('tasksReducer/addTask', async (param: 
            return  rejectWithValue(null)
         }
     } catch (error) {
-        //  handleServerNetworkError(error, dispatch)
+       //   handleServerNetworkError(error, dispatch)
         return rejectWithValue(null)
     }
 })
@@ -83,13 +82,13 @@ const slice = createSlice({
     initialState: initialState,
     reducers: {},
     extraReducers: (builder) => {
-        builder.addCase(addTodoList, (state, action) => {
+        builder.addCase(addTodolistTC.fulfilled, (state, action) => {
             state[action.payload.todolist.id] = []
         });
-        builder.addCase(removeTodoList, (state, action) => {
+        builder.addCase(removeTodolistTC.fulfilled, (state, action) => {
             delete state[action.payload.id]
         });
-        builder.addCase(setTodoLists, (state, action) => {
+        builder.addCase(fetchTodoListsTC.fulfilled, (state, action) => {
             action.payload.todoLists.forEach((tl: any) => {
                 state[tl.id] = []
             })
